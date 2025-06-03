@@ -33,24 +33,24 @@ const AdvancedResultsComponent = ({ costData }: AdvancedResultsComponentProps) =
 
   return (
     <Card className="border-2 border-gray-200 shadow-xl">
-      <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+      <CardHeader className="bg-gradient-to-r from-blue-800 to-indigo-800 text-white">
         <CardTitle className="flex items-center gap-3">
           <Calculator className="h-6 w-6" />
           Resultados del Modelo CIF
         </CardTitle>
-        <p className="text-blue-100 text-sm">
+        <p className="text-blue-200 text-sm">
           CTI = CIF × (1 + ta) × (1 + ti) + GA + CO
         </p>
       </CardHeader>
       
       <CardContent className="space-y-6 pt-6">
         {/* Total CTI */}
-        <div className="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border">
+        <div className="text-center p-6 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-lg border">
           <div className="flex items-center justify-center mb-2">
-            <DollarSign className="h-8 w-8 text-blue-600 mr-2" />
+            <DollarSign className="h-8 w-8 text-blue-800 mr-2" />
             <span className="text-2xl font-bold text-gray-900">CTI Total</span>
           </div>
-          <div className="text-4xl font-bold text-blue-600 mb-2">
+          <div className="text-4xl font-bold text-blue-800 mb-2">
             {formatCurrency(calculations.costoTotalImportacion)}
           </div>
           <Badge variant="secondary" className="text-xs">
