@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
@@ -23,7 +22,13 @@ const AdvancedResultsComponent = ({ costData }: AdvancedResultsComponentProps) =
   ];
 
   const getPercentage = (value: number): number => {
-    return calculations.costoTotalImportacion > 0 ? (value / calculations.costoTotalImportacion) * 100 : 0;
+    const total = calculations.FOB + 
+                 calculations.costoFlete + 
+                 calculations.costoSeguro + 
+                 calculations.aranceles + 
+                 calculations.impuestosGenerales + 
+                 calculations.gastosAduaneros;
+    return total > 0 ? (value / total) * 100 : 0;
   };
 
   return (
@@ -112,38 +117,41 @@ const AdvancedResultsComponent = ({ costData }: AdvancedResultsComponentProps) =
           ))}
         </div>
 
-        {/* Análisis Estocástico */}
-        <div className="p-4 bg-yellow-50 rounded-lg border">
-          <h4 className="font-semibold text-yellow-900 mb-2">Análisis Estocástico:</h4>
-          <div className="space-y-1 text-sm">
-            <div className="flex justify-between">
-              <span>CTI Esperado:</span>
-              <span className="font-bold">{formatCurrency(calculations.CTI_esperado)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Desviación Estándar:</span>
-              <span className="font-bold">{formatCurrency(calculations.desviacionEstandar_CTI)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Coef. Variación:</span>
-              <span className="font-bold">{calculations.coeficienteVariacion.toFixed(2)}%</span>
+        {/* Análisis Estocástico y CTI con Factor Tiempo en una sola fila */}
+        <div className="grid grid-cols-2 gap-4">
+          {/* Análisis Estocástico */}
+          <div className="p-4 bg-yellow-50 rounded-lg border">
+            <h4 className="font-semibold text-yellow-900 mb-2">Análisis Estocástico:</h4>
+            <div className="space-y-1 text-sm">
+              <div className="flex justify-between">
+                <span>CTI Esperado:</span>
+                <span className="font-bold">{formatCurrency(calculations.CTI_esperado)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Desviación Estándar:</span>
+                <span className="font-bold">{formatCurrency(calculations.desviacionEstandar_CTI)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Coef. Variación:</span>
+                <span className="font-bold">{calculations.coeficienteVariacion.toFixed(2)}%</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* CTI con Factor Tiempo */}
-        <div className="p-4 bg-purple-50 rounded-lg border">
-          <h4 className="font-semibold text-purple-900 mb-2">CTI con Factor Tiempo:</h4>
-          <div className="text-xl font-bold text-purple-600">
-            {formatCurrency(calculations.CTI_conTiempo)}
+          {/* CTI con Factor Tiempo */}
+          <div className="p-4 bg-purple-50 rounded-lg border">
+            <h4 className="font-semibold text-purple-900 mb-2">CTI con Factor Tiempo:</h4>
+            <div className="text-xl font-bold text-purple-600">
+              {formatCurrency(calculations.CTI_conTiempo)}
+            </div>
+            <p className="text-xs text-purple-700 mt-1">
+              Incluye tasa de descuento y factor temporal
+            </p>
           </div>
-          <p className="text-xs text-purple-700 mt-1">
-            Incluye tasa de descuento y factor temporal
-          </p>
         </div>
 
         {/* Formula Reference */}
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg border">
+        <div className="p-4 bg-gray-50 rounded-lg border">
           <h4 className="font-semibold text-gray-900 mb-2">Modelo Matemático:</h4>
           <div className="space-y-1 text-xs font-mono text-gray-700">
             <p>CIF = FOB + CF + S</p>
